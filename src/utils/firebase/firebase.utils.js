@@ -22,16 +22,28 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 //Initialize Provider
-const provider = new GoogleAuthProvider(); // GoogleAuthProvider is a class
+const googleProvider = new GoogleAuthProvider(); // GoogleAuthProvider is a class
+// there are multiple ways you can provide different providers, googleAuth is just one of them.
+
 //set parameters
-provider.setCustomParameters({
+googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 //this means that every time someone interacts w/ the provider, it will force them to select an account
 //this is just a configuration setup that google wants
 
+//there's a reason why GoogleAuthProvider is a class and the others are instances.
+// the auth is a singleton bc it keeps track of the authentication state of the ENTIRE application.
+// as the user signs in through different means / methods, we need a way to be certain of what it is
+// that the user has done, esp in the framework of this browser, where whenever you navigate away from your website,
+// you're breaking the instance of the website. So the auth is the only way to keep track of whether or not users are properly
+// authenticating or not.
+
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const signInWithGooglePopup = () =>
+  signInWithPopup(auth, googleProvider);
+export const signInWithGoogleRedirect = () =>
+  signInWithRedirect(auth, googleProvider);
 
 export const db = getFirestore();
 
