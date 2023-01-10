@@ -30,7 +30,8 @@ const SignUpForm = () => {
 
     try {
       const user = await createAuthUserWithEmailAndPassword(email, password);
-
+      //instead of doing userAuth.user in firebase.utils, i think you could add {} around this user to destructure
+      //and it should work the same. will try later, but for now this works.
       await createUserDocumentFromAuth(user, { displayName });
       resetFormFields();
     } catch (error) {
