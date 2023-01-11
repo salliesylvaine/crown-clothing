@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
@@ -8,8 +8,6 @@ import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
-
-import { UserContext } from "../../contexts/user.context";
 
 const defaultFormFields = {
   displayName: "",
@@ -21,8 +19,6 @@ const defaultFormFields = {
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
-
-  const { setCurrentUser } = useContext(UserContext);
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -42,9 +38,8 @@ const SignUpForm = () => {
         password
       );
 
-      setCurrentUser(user);
       //instead of doing userAuth.user in firebase.utils, i think you could add {} around this user to destructure
-      //and it should work the same. will try later, but for now this works.
+      //and it should work the same. will try later, but for now this works. update: switched back to destructuring user
       await createUserDocumentFromAuth(user, { displayName });
       resetFormFields();
     } catch (error) {
