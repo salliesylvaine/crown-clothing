@@ -1,6 +1,6 @@
 import { Fragment, useContext } from "react"; //component that renders to nothing. the point of using is bc of react's rules where a component has to have a parent element. useful if you dont want to render a specific html element.
 
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 //Outlet component allows nested routes to render their element content out and anything else the layout route is rendering.
 // used in parent route elements to render their child route elements
 
@@ -14,7 +14,12 @@ import { CartContext } from "../../contexts/cart.context";
 
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 
-import "./navigation.styles.scss";
+import {
+  NavigationContainer,
+  NavLinks,
+  NavLink,
+  LogoContainer,
+} from "./navigation.styles";
 
 const Navigation = () => {
   const { currentUser } = useContext(UserContext);
@@ -23,29 +28,25 @@ const Navigation = () => {
 
   return (
     <Fragment>
-      <div className="navigation">
-        <Link className="logo-container" to="/">
+      <NavigationContainer className="navigation">
+        <LogoContainer to="/">
           <CrownLogo className="logo" />
-        </Link>
-        <div className="nav-links-container">
-          <Link className="nav-link" to="/shop">
-            SHOP
-          </Link>
+        </LogoContainer>
+        <NavLinks>
+          <NavLink to="/shop">SHOP</NavLink>
           {currentUser ? (
-            <span className="nav-link" onClick={signOutUser}>
+            <NavLink as="span" onClick={signOutUser}>
               SIGN OUT
-            </span>
+            </NavLink>
           ) : (
-            <Link className="nav-link" to="/auth">
-              SIGN IN
-            </Link>
+            <NavLink to="/auth">SIGN IN</NavLink>
           )}
           <CartIcon />
-        </div>
+        </NavLinks>
 
         {isCartOpen && <CartDropdown />}
         {/* all components are truthy by default, so with &&, both have to evaluate to true to load */}
-      </div>
+      </NavigationContainer>
       <Outlet />
     </Fragment>
   );
