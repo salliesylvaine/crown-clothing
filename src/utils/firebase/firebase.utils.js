@@ -74,7 +74,6 @@ export const addCollectionAndDocuments = async (
   });
 
   await batch.commit();
-  console.log("done");
 };
 
 export const getCategoriesAndDocuments = async () => {
@@ -99,19 +98,16 @@ export const createUserDocumentFromAuth = async (
   if (!userAuth) {
     return;
   }
-  console.log(userAuth);
+
   const userDocRef = doc(db, "users", userAuth.uid);
 
   const userSnapshot = await getDoc(userDocRef);
-  // console.log(userSnapshot);
-  // console.log(userSnapshot.exists());
 
   //if user data does not exist
   //create / set the document with the data from userAuth in my collection
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
-    console.log("database test");
 
     try {
       await setDoc(userDocRef, {
@@ -124,8 +120,7 @@ export const createUserDocumentFromAuth = async (
       console.log("error creating the user", error.message);
     }
   }
-  // console.log(userDocRef);
-  // console.log(userSnapshot.exists());
+
   //if user data exists
   return userDocRef;
 
@@ -133,14 +128,12 @@ export const createUserDocumentFromAuth = async (
 };
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
-  console.log("test one");
   if (!email || !password) return; //this offers protection of our code, if we dont receive the arguments, dont run the function
 
   return await createUserWithEmailAndPassword(auth, email, password);
 };
 
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
-  console.log("test one");
   if (!email || !password) return; //this offers protection of our code, if we dont receive the arguments, dont run the function
 
   return await signInWithEmailAndPassword(auth, email, password);
