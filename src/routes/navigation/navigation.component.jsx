@@ -4,13 +4,17 @@ import { Outlet } from "react-router-dom";
 //Outlet component allows nested routes to render their element content out and anything else the layout route is rendering.
 // used in parent route elements to render their child route elements
 
+import { useSelector } from "react-redux";
+// useSelector is a hook that allows us to interact from a component with the redux store
+
 import { ReactComponent as CrownLogo } from "../../assets/crown.svg";
 
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 
-import { UserContext } from "../../contexts/user.context";
 import { CartContext } from "../../contexts/cart.context";
+
+import { selectCurrentUser } from "../../store/user/user.selector";
 
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 
@@ -22,7 +26,7 @@ import {
 } from "./navigation.styles";
 
 const Navigation = () => {
-  const { currentUser } = useContext(UserContext);
+  const currentUser = useSelector(selectCurrentUser);
   // the context lets us store our user but also tracks the authentication of that user
   const { isCartOpen } = useContext(CartContext);
 
