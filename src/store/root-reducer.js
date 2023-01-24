@@ -7,3 +7,9 @@ export const rootReducer = combineReducers({
   user: userReducer,
   categories: categoriesReducer,
 });
+
+//whenever the reducer updates the any of these reducer values, the entire
+//store object is going to be a new store object, which triggers selector functions getting rerun
+
+// Whenever any action fires, and as long as a reducer updates, every single component that has a useSelector will rerun.
+// This doesn't necessarily mean it will trigger a re-render. (That will depend on how we code out our structure)
