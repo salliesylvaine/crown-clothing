@@ -1,5 +1,6 @@
 import { compose, createStore, applyMiddleware } from "redux";
 // import logger from "redux-logger";
+import { loggerMiddleware } from "./middleware/logger";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -18,20 +19,6 @@ import { rootReducer } from "./root-reducer";
         withA(2, 4); // 3 + 2 - 4
 */
 
-const loggerMiddleware = (store) => (next) => (action) => {
-  if (!action.type) {
-    return next(action);
-  }
-
-  console.log("type", action.type);
-  console.log("payload", action.payload);
-  console.log("currentState", store.getState());
-
-  next(action);
-
-  console.log("next state: ", store.getState());
-};
-
 const persistConfig = {
   key: "root",
   storage,
@@ -40,10 +27,22 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middleWares = [loggerMiddleware];
+const middleWares = [
+  process.env.NODE_ENV !== "production" && loggerMiddleware,
+].filter(Boolean); //filtering out the boolean so we don't pass false as a middleware
+//if evaluated to false, it just returns an empty array
+
+const composeEnhancer =
+  (process.env.NODE_ENV !== "production" &&
+    window &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose;
+
+//this is specifying using the redux devtools compose for the production window object, otherwise just use the
+// compose that comes with redux
 
 //compose is a functional programming concept, it's a way for us to pass multiple functions left to right
-const composedEnhancers = compose(applyMiddleware(...middleWares));
+const composedEnhancers = composeEnhancer(applyMiddleware(...middleWares));
 
 //middleware has to be passed as the third argument
 export const store = createStore(
