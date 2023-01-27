@@ -20,3 +20,8 @@ export const selectCategoriesMap = createSelector(
 );
 
 // this is saying if the categories array does not change, do not run the categories.reduce method
+
+export const selectCategoriesIsLoading = createSelector(
+  [selectCategoryReducer],
+  (categoriesSlice) => categoriesSlice.isLoading
+);
