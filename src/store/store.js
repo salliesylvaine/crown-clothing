@@ -3,6 +3,7 @@ import { compose, createStore, applyMiddleware } from "redux";
 import { loggerMiddleware } from "./middleware/logger";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import thunk from "redux-thunk";
 
 import { rootReducer } from "./root-reducer";
 
@@ -29,6 +30,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const middleWares = [
   process.env.NODE_ENV !== "production" && loggerMiddleware,
+  thunk,
 ].filter(Boolean); //filtering out the boolean so we don't pass false as a middleware
 //if evaluated to false, it just returns an empty array
 
