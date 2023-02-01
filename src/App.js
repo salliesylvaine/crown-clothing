@@ -16,6 +16,8 @@ import Checkout from "./routes/checkout/checkout.component";
 
 import { setCurrentUser } from "./store/user/user.action";
 
+// test commit
+
 const App = () => {
   const dispatch = useDispatch();
 
