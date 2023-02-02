@@ -5,8 +5,6 @@ const INITIAL_STATE = {
 };
 
 export const userReducer = (state = INITIAL_STATE, action) => {
-  console.log("dispatched");
-  console.log(action);
   const { type, payload } = action;
 
   switch (type) {
@@ -18,7 +16,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
     case "increment":
       return {
         value: state.value + 1,
-      };
+      }; // not sure i need this, i think it was just an example that was removed
 
     default:
       return state;

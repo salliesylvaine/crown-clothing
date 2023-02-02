@@ -17,9 +17,10 @@ import Checkout from "./routes/checkout/checkout.component";
 import { setCurrentUser } from "./store/user/user.action";
 
 const App = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); // used to dispatch actions and trigger state changes to the store.
 
   useEffect(() => {
+    //useEffect allows you to perform side effects in components, accepts 2 params, a function and optional array (which should always be included lest we want it to run on every render)
     const unsubscribe = onAuthStateChangedListener((user) => {
       if (user) {
         createUserDocumentFromAuth(user);
@@ -29,7 +30,8 @@ const App = () => {
     });
 
     return unsubscribe;
-  }, [dispatch]);
+  }, [dispatch]); // dispatch is added here bc the linter was angry
+  //empty array only runs on initial render, anything in array runs on initial render plus anytime a dependency value changes
 
   return (
     <Routes>

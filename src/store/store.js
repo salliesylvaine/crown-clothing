@@ -22,10 +22,11 @@ import { rootReducer } from "./root-reducer";
 
 const persistConfig = {
   key: "root",
-  storage,
-  whitelist: ["cart"],
+  storage, // both are required config
+  whitelist: ["cart"], // whitelisting means only cart will be persisted
 };
 
+//returns an enhanced reducer (passed rootReducer bc it's top level reducer)
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const middleWares = [
@@ -53,4 +54,5 @@ export const store = createStore(
   composedEnhancers
 );
 
+//setting up the store to be persisted
 export const persistor = persistStore(store);

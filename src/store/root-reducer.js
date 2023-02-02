@@ -9,6 +9,9 @@ export const rootReducer = combineReducers({
   categories: categoriesReducer,
   cart: cartReducer,
 });
+// root reducers help keep code modular and allow you to create many different reducers that can handle different slices of state.
+// combineReducers() takes an object argument with keys that represent the state slice and values that represent the reducer that
+// handles actions related to that state slice.
 
 //whenever the reducer updates the any of these reducer values, the entire
 //store object is going to be a new store object, which triggers selector functions getting rerun

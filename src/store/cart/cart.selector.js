@@ -25,6 +25,10 @@ export const selectCartTotal = createSelector([selectCartItems], (cartItems) =>
   )
 );
 
+// A "selector function" is any function that accepts the Redux store
+// state (or part of the state) as an argument, and returns data that
+// is based on that state.
+
 //generate new cart total
 // const newCartTotal = cartItems.reduce(
 //   (total, cartItem) => total + cartItem.quantity * cartItem.price,
